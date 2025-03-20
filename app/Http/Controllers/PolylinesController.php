@@ -15,7 +15,11 @@ class PolylinesController extends Controller
     }
     public function index()
     {
-        //
+        $data=[
+            'title' => 'Map',
+        ];
+
+        return view('map',$data);
     }
 
     /**
@@ -33,15 +37,32 @@ class PolylinesController extends Controller
     {
         $data = [
             'name' => $request->name,
-            'geom' => $request->geom_line,
+            'geom' => $request->geom_polyline,
             'description' => $request->description,
         ];
 
+
+        // Validate Reuqest
+        $request->validate(
+            [
+                'name'=>'required|unique:polylines,name',
+                'description'=>'required',
+                'geom_polyline'=>'required',
+            ],
+            [
+                'name.required'=>'Name is required',
+                'name.unique'=>'Name already exist',
+                'description.required'=>'Description is required',
+                'geom_polyline.required'=>'polyline is required',
+            ]
+            );
         // create data
-        $this->polylines->create($data);
+        if (!$this->polylines->create($data)) {
+            return redirect()->route('map')->with('success', 'Polylines Failed to add');
+        }
 
         //redirect to map
-        return redirect()->route('map');
+        return redirect()->route('map')->with('success', 'Polylines Has Been Added');
     }
 
     /**
