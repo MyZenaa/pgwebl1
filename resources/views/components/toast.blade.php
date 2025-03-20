@@ -40,16 +40,16 @@
             aria-atomic="true" id = "toastError">
             <div class="d-flex">
                 <div class="toast-body">
-                 @foreach ($errors->all() as $error)
-                    {{ $error }}<br>
-                 @endforeach
+                    @foreach ($errors->all() as $error)
+                        {{ $error }}<br>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
-    <script>
-        var toastError = document.getElementById('toastError')
-        var toast = new bootstrap.Toast(toastError)
+        <script>
+            var toastError = document.getElementById('toastError')
+            var toast = new bootstrap.Toast(toastError)
 
-        toast.show()
-    </script>
+            toast.show()
+        </script>
 @endif
