@@ -1,25 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\PolylinesModel;
+
 use Illuminate\Http\Request;
+use App\Models\PolylinesModel;
 
 class PolylinesController extends Controller
 {
+    public function __construct()
+{
+    $this->polylines = new PolylinesModel();
+}
     /**
      * Display a listing of the resource.
      */
-    public function __construct()
-    {
-        $this->polylines = new PolylinesModel();
-    }
     public function index()
     {
-        $data=[
-            'title' => 'Map',
-        ];
-
-        return view('map',$data);
+        //
     }
 
     /**
@@ -35,34 +32,30 @@ class PolylinesController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-            'name' => $request->name,
-            'geom' => $request->geom_polyline,
-            'description' => $request->description,
-        ];
-
-
-        // Validate Reuqest
         $request->validate(
             [
-                'name'=>'required|unique:polylines,name',
-                'description'=>'required',
-                'geom_polyline'=>'required',
+                'name' => 'required|unique:polylines,name',
+                'description' => 'required',
+                'geom_polyline' => 'required',
             ],
             [
-                'name.required'=>'Name is required',
-                'name.unique'=>'Name already exist',
-                'description.required'=>'Description is required',
-                'geom_polyline.required'=>'polyline is required',
+                'name.required' => 'Name is required',
+                'name.unique' => 'Name already exists',
+                'description.required' => 'Description is required',
+                'geom_polyline.required' => 'coordinates is required',
             ]
-            );
-        // create data
+        );
+        $data = [
+            'geom' => $request->geom_polyline,
+            'name' => $request->name,
+            'description' => $request->description,
+        ];
+        //create data
         if (!$this->polylines->create($data)) {
-            return redirect()->route('map')->with('success', 'Polylines Failed to add');
+            return redirect()->route('map')->with('error', 'Failed to add polyline');
         }
 
-        //redirect to map
-        return redirect()->route('map')->with('success', 'Polylines Has Been Added');
+        return redirect()->route('map')->with('success', 'Polyline added successfully');
     }
 
     /**
