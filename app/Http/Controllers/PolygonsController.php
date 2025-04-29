@@ -35,10 +35,25 @@ class PolygonsController extends Controller
      */
     public function store(Request $request)
     {
+        //membuat direktori penyimpanan jika belum ada
+        if (!is_dir('storage')) {
+            mkdir('./storage', 0777);
+        }
+
+        //metode untuk mendapatkan file untuk disimpan
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name_image = time() . "_polygon." . strtolower($image->getClientOriginalExtension());
+            $image->move('storage/images', $name_image);
+        } else {
+            $name_image = null;
+        }
+
         $data = [
             'name' => $request->name,
             'geom' => $request->geom_polygon,
             'description' => $request->description,
+            'image' => $name_image
         ];
 
 
