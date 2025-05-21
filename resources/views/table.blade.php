@@ -1,40 +1,90 @@
 @extends('layout.template')
 
 @section('content')
+<h2>Points</h2>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama</th>
-                <th scope="col">NIM</th>
-                <th scope="col">Kelas</th>
+                <th scope="col" class="text-center" style="width: 10%;">No</th>
+                <th scope="col" class="text-center" style="width: 20%;">Name</th>
+                <th scope="col" class="text-center" style="width: 30%;">Description</th>
+                <th scope="col" class="text-center" style="width: 20%;">Gambar</th>
+                <th scope="col" class="text-center" style="width: 10%;">Created at</th>
+                <th scope="col" class="text-center" style="width: 10%;">Updated At</th>
             </tr>
         </thead>
         <tbody>
+            @foreach ($points as $p)
                 <tr>
-                    <td>1</td>
-                    <td>Pradja Agung Kurniawan</td>
-                    <td>23/515553/SV/22572</td>
-                    <td>PGWEBL A</td>
+                    <td class="text-center"> {{ $p->id }} </td>
+                    <td> {{ $p->name }} </td>
+                    <td> {{ $p->description }} </td>
+                    <td class="text-center">
+                        <img src="{{ asset('storage/images/' . $p->image) }}" alt="" class="img-thumbnail"
+                            width="100">
+                    </td>
+                    <td class="text-center"> {{ $p->created_at }} </td>
+                    <td class="text-center"> {{ $p->updated_at }} </td>
                 </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <h2>Polylines</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center" style="width: 10%;">No</th>
+                <th scope="col" class="text-center" style="width: 20%;">Name</th>
+                <th scope="col" class="text-center" style="width: 30%;">Description</th>
+                <th scope="col" class="text-center" style="width: 20%;">Gambar</th>
+                <th scope="col" class="text-center" style="width: 10%;">Created at</th>
+                <th scope="col" class="text-center" style="width: 10%;">Updated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($polylines as $p)
                 <tr>
-                    <td>2</td>
-                    <td>Myzenaaaaaaaa</td>
-                    <td>23/87282/SV/22572</td>
-                    <td>PGWEBL B</td>
+                    <td class="text-center"> {{ $p->id }} </td>
+                    <td> {{ $p->name }} </td>
+                    <td> {{ $p->description }} </td>
+                    <td class="text-center">
+                        <img src="{{ asset('storage/images/' . $p->image) }}" alt="" class="img-thumbnail"
+                            width="100">
+                    </td>
+                    <td class="text-center"> {{ $p->created_at }} </td>
+                    <td class="text-center"> {{ $p->updated_at }} </td>
                 </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <h2>Polygons</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center" style="width: 10%;">No</th>
+                <th scope="col" class="text-center" style="width: 20%;">Name</th>
+                <th scope="col" class="text-center" style="width: 30%;">Description</th>
+                <th scope="col" class="text-center" style="width: 20%;">Gambar</th>
+                <th scope="col" class="text-center" style="width: 10%;">Created at</th>
+                <th scope="col" class="text-center" style="width: 10%;">Updated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($polygons as $p)
                 <tr>
-                    <td>3</td>
-                    <td>fufufuaaan</td>
-                    <td>23/515553/SV/22572</td>
-                    <td>PGWEBL B</td>
+                    <td class="text-center"> {{ $p->id }} </td>
+                    <td> {{ $p->name }} </td>
+                    <td> {{ $p->description }} </td>
+                    <td class="text-center">
+                        <img src="{{ asset('storage/images/' . $p->image) }}" alt="" class="img-thumbnail"
+                            width="100">
+                    </td>
+                    <td class="text-center"> {{ $p->created_at }} </td>
+                    <td class="text-center"> {{ $p->updated_at }} </td>
                 </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Persija Jakarta</td>
-                    <td>23/515553/SV/22572</td>
-                    <td>PGWEBL B</td>
-                </tr>
+            @endforeach
         </tbody>
     </table>
 @endsection

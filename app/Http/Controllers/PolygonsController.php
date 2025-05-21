@@ -105,7 +105,60 @@ class PolygonsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate Reuqest
+        $request->validate(
+            [
+                'name' => 'required|unique:polygons,name,' . $id,
+                'description' => 'required',
+                'geom_polygon' => 'required',
+                'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:10240', // 10mb
+            ],
+            [
+                'name.required' => 'Name is required',
+                'name.unique' => 'Name already exist',
+                'description.required' => 'Description is required',
+                'geom_polygon.required' => 'Polygon is required',
+            ]
+        );
+        // Create Image direktori
+        if (!is_dir('storage/images')) {
+            mkdir('./storage/images', 0777);
+        }
+
+
+        // Get old image file name
+        $old_image = $this->polygons->find($id)->image;
+        //Get Image File
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $name_image = time() . "_polygon." . strtolower($image->getClientOriginalExtension());
+            $image->move('storage/images', $name_image);
+        } else {
+            $name_image = $old_image;
+        }
+        // Delete old image file
+        if ($old_image != null) {
+            if (file_exists('./storage/images/' . $old_image)) {
+                unlink('./storage/images/' . $old_image);
+            } else {
+                $old_image = null;
+            }
+        }
+
+        // create data
+        $data = [
+            'name' => $request->name,
+            'geom' => $request->geom_polygon,
+            'description' => $request->description,
+            'image' => $name_image,
+        ];
+        // Update data
+        if (!$this->polygons->find($id)->update($data)) {
+            return redirect()->route('map')->with('success', 'Polygon Failed to add');
+        }
+
+        //redirect to map
+        return redirect()->route('map')->with('success', 'Polygon Has Been Added');
     }
 
     /**
