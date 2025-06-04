@@ -70,6 +70,7 @@ class PointsController extends Controller
             'geom' => $request->geom_point,
             'description' => $request->description,
             'image' => $name_image,
+            'user_id' => auth()->user()->id,
         ];
         // create data
         if (!$this->points->create($data)) {

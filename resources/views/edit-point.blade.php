@@ -91,14 +91,11 @@
                 layers.eachLayer(function(layer) {
                     var drawnJSONObject = layer.toGeoJSON();
                     console.log(drawnJSONObject);
-
                     var objectGeometry = Terraformer.geojsonToWKT(drawnJSONObject.geometry);
                     console.log(objectGeometry);
-
                     // layer properties
                     var properties = drawnJSONObject.properties;
                     console.log(properties);
-
                     drawnItems.addLayer(layer);
 
                     // Menampilkan data Ke dalam modal

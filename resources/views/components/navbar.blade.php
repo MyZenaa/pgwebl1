@@ -15,16 +15,33 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('table')}}"><i class="fa-solid fa-table"></i> Tabel</a>
                 </li>
+                @auth
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('home')}}"><i class="fa-solid fa-table"></i>dashboard</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-database"></i>
                         Data
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" dropdown-menu-end>
                         <li><a class="dropdown-item" href="{{route('api.points') }}" target="blank">Points</a></li>
                         <li><a class="dropdown-item" href="{{route('api.polylines') }}" target="blank">Polylines</a></li>
                         <li><a class="dropdown-item" href="{{route('api.polygons') }}" target="blank">Polygons</a></li>
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+                    </form>
+                </li>
+                @endauth
+                {{-- JIka Userb Belum login --}}
+                @guest
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+                @endguest
             </ul>
         </div>
     </div>

@@ -53,7 +53,8 @@ class PolygonsController extends Controller
             'name' => $request->name,
             'geom' => $request->geom_polygon,
             'description' => $request->description,
-            'image' => $name_image
+            'image' => $name_image,
+            'user_id' => auth()->user()->id,
         ];
 
 
